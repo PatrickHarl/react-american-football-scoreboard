@@ -2,44 +2,95 @@
 import React, { useState } from "react";
 import BottomRow from "./BottomRow";
 import "./App.css";
+import ButtonSection from "./ButtonSection";
+import AwayTeam from "./AwayTeam"
+import HomeTeam from "./HomeTeam"
 
 function App() {
   //TODO: STEP 2 - Establish your applictaion's state with some useState hooks.  You'll need one for the home score and another for the away score.
   const [lionsScore, setLionsScore] = useState(0)
   const [tigersScore, setTigersScore] = useState(0)
+  const [quarter, setQuarter] = useState(1)
+  const [tensMinuteTimer, setTensMinuteTimer] = useState(1)
+  const [minuteTimer, setMinuteTimer] = useState(5)
+  const [tensSecondTimer, setTensSecondTimer] = useState(0)
+  const [secondTimer, setSecondTimer] = useState(0)
+  
+  const updateTimer = () => {
+
+    if (secondTimer > 0 && secondTimer < 10)
+    {
+
+      setSecondTimer(secondTimer - 1)
+
+    }
+    else if (secondTimer <= 0)
+    {
+      if (tensMinuteTimer === 0 && minuteTimer === 0 && tensSecondTimer === 0 && secondTimer === 0)
+      {
+
+        return;
+
+      }
+      setSecondTimer(9)
+
+      if (tensSecondTimer <= 5 && tensSecondTimer > 0)
+      {
+
+        setTensSecondTimer(tensSecondTimer - 1)
+
+      }
+      else if (tensSecondTimer <= 0)
+      {
+
+        setTensSecondTimer(5)
+
+          if (minuteTimer <= 9 && minuteTimer > 0)
+        {
+
+          setMinuteTimer(minuteTimer - 1)
+
+        }
+        else if (minuteTimer <= 0)
+        {
+
+          setMinuteTimer(9)
+
+          if (tensMinuteTimer <= 5 && tensMinuteTimer > 0)
+          {
+    
+            setTensMinuteTimer(tensMinuteTimer - 1)
+    
+          }
+          else if (tensMinuteTimer <= 0)
+          {
+    
+            setTensMinuteTimer(0)
+    
+          }
+
+        }
+
+      }
+      
+
+    }
+
+  }
+
+  setTimeout(updateTimer, 1000)
 
   return (
     <div className="container">
       <section className="scoreboard">
         <div className="topRow">
-          <div className="home">
-            <h2 className="home__name">Lions</h2>
-
-            {/* TODO STEP 3 - We need to change the hardcoded values in these divs to accept dynamic values from our state. */}
-  <div className="home__score">{lionsScore}</div>
-          </div>
-          <div className="timer">00:03</div>
-          <div className="away">
-            <h2 className="away__name">Tigers</h2>
-            <div className="away__score">{tigersScore}</div>
-          </div>
+          <HomeTeam lionsScore={lionsScore} />
+  <div className="timer">{tensMinuteTimer}{minuteTimer}:{tensSecondTimer}{secondTimer}</div>
+          <AwayTeam tigersScore={tigersScore} />
         </div>
-        <BottomRow />
+        <BottomRow quarter={quarter} />
       </section>
-      <section className="buttons">
-            <div className="homeButtons">
-                    {/* TODO STEP 4 - Now we need to attach our state setter functions to click listeners. */} 
-                   <button onClick={() => setLionsScore(lionsScore + 7)} className="homeButtons__touchdown">Home Touchdown</button>
-                   <button onClick={() => setLionsScore(lionsScore + 3)} className="homeButtons__fieldGoal">Home Field Goal</button>
-                
-                    
-            </div>
-            <div className="awayButtons">
-                   
-                   <button onClick={() => setTigersScore(tigersScore + 7)} className="awayButtons__touchdown">Away Touchdown</button>
-                   <button onClick={() => setTigersScore(tigersScore + 3)}className="awayButtons__fieldGoal">Away Field Goal</button>
-            </div>
-        </section>
+      <ButtonSection setLionsScore={setLionsScore} lionsScore={lionsScore} setTigersScore={setTigersScore} tigersScore={tigersScore} quarter={quarter} setQuarter={setQuarter}/>
     </div>
   );
 }

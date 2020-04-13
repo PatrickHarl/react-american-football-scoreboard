@@ -6,7 +6,7 @@
 .scoreboard {
   width: 58%;
   margin: 2rem auto;
-  background-color: #0b5402;
+  background-color: teal;
   color: white;
   border-radius: 0.5rem;
   padding: 5rem;
@@ -27,7 +27,7 @@
   flex-direction: column;
   justify-content: space-around;
   place-items: center;
-  border: 3px solid white;
+  border: 3px solid orange;
   border-radius: 0.5rem;
   width: 15rem;
 }
@@ -68,7 +68,7 @@
   padding: 2rem;
   text-align: center;
   background-color: var(--black);
-  border: 2px solid white;
+  border: 2px solid orange;
   border-radius: 6px;
 }
 
@@ -102,7 +102,7 @@
   margin-top: 1rem;
   border-radius: 4px;
   padding: 1.6rem;
-  border: 1px solid white;
+  border: 1px solid orange;
 }
 
 .buttons {
